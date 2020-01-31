@@ -10,10 +10,12 @@ public class BallMove : MonoBehaviour
     public float speed;
     public GameObject pongBall;
     public bool paused;
+    public bool thrust;
 
     void Start()
     {
         paused = true;
+        thrust = false;
         StartCoroutine(Delay());
         rb = GetComponent<Rigidbody>();
     }
@@ -23,11 +25,17 @@ public class BallMove : MonoBehaviour
         if (paused == true)
         {
             rb.constraints = RigidbodyConstraints.FreezePosition;
-        } else
+        } 
+        else
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.AddForce(xThrust, yThrust, 0, ForceMode.Impulse);
-            yThrust = Random.Range(-15f, 15f);
+            if (thrust == true)
+            {
+                rb.AddForce(xThrust, yThrust, 0, ForceMode.Impulse);
+                yThrust = Random.Range(-15f, 15f);
+                thrust = false;
+                StopCoroutine(Delay());
+            }
         }
         rb.velocity = speed * (rb.velocity.normalized);
     }
@@ -54,6 +62,7 @@ public class BallMove : MonoBehaviour
     {
         paused = true;
         yield return new WaitForSeconds(2f);
+        thrust = true;
         paused = false;
     }
 }

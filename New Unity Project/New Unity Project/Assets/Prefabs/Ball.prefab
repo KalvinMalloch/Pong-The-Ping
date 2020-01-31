@@ -122,5 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
-  thrust: 20
+  xThrust: 0
+  yThrust: 0
+  speed: 0
   pongBall: {fileID: 2417677530450841362}
+  paused: 0
+  thrust: 20
